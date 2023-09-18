@@ -1,8 +1,12 @@
 # Project Name
 
-Developer Names:
+Developer Names: 
+- Laura Southwood
+- Simone Ocvirk
+- Madrigal Weersink
+- Rachel Hogan
 
-Date of project start:
+Date of project start: September 5, 2023
 
 This project is ...
 
