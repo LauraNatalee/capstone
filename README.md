@@ -1,10 +1,10 @@
 # Project Name
 
 Developer Names: 
-- Laura Southwood
-- Simone Ocvirk
-- Madrigal Weersink
 - Rachel Hogan
+- Simone Ocvirk
+- Laura Southwood
+- Madrigal Weersink
 
 Date of project start: September 5, 2023
 
