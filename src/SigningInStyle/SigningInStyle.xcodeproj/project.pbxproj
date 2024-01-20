@@ -16,6 +16,7 @@
 		FC67DBF72B0AE905003347C4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FC67DBF62B0AE905003347C4 /* Assets.xcassets */; };
 		FC67DBFA2B0AE905003347C4 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FC67DBF92B0AE905003347C4 /* Preview Assets.xcassets */; };
 		FC67DBFD2B0AE905003347C4 /* SigningInStyleWatch Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = FC67DBF02B0AE904003347C4 /* SigningInStyleWatch Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		FCB7689A2B5C63DF00F39FCB /* Audio.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCB768992B5C63DF00F39FCB /* Audio.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +54,7 @@
 		FC67DBF42B0AE904003347C4 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		FC67DBF62B0AE905003347C4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FC67DBF92B0AE905003347C4 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		FCB768992B5C63DF00F39FCB /* Audio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Audio.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,6 +117,7 @@
 			children = (
 				FC67DBF22B0AE904003347C4 /* SigningInStyleWatchApp.swift */,
 				FC67DBF42B0AE904003347C4 /* ContentView.swift */,
+				FCB768992B5C63DF00F39FCB /* Audio.swift */,
 				FC67DBF62B0AE905003347C4 /* Assets.xcassets */,
 				FC67DBF82B0AE905003347C4 /* Preview Content */,
 			);
@@ -240,6 +243,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FCB7689A2B5C63DF00F39FCB /* Audio.swift in Sources */,
 				FC67DBF52B0AE904003347C4 /* ContentView.swift in Sources */,
 				FC67DBF32B0AE904003347C4 /* SigningInStyleWatchApp.swift in Sources */,
 			);
