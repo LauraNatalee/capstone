@@ -13,7 +13,6 @@ class Speaker {
     func speak(_ text: String) {
         let utterance = AVSpeechUtterance(string: text)
         utterance.rate = AVSpeechUtteranceDefaultSpeechRate
-        utterance.voice = AVSpeechSynthesisVoice(language: "en-US")
         let session = AVAudioSession.sharedInstance()
         do {
             try session.setCategory(AVAudioSession.Category.playback,
