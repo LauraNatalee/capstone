@@ -1,4 +1,5 @@
 import Combine
+import CoreML
 import CoreMotion
 import SwiftUI
 import WatchConnectivity
@@ -20,13 +21,58 @@ extension RecordingSnapshot: CustomStringConvertible {
 
 class MotionManager: ObservableObject {
     private var motionManager = CMMotionManager()
+    let model: SignRecognition
+    let speaker = Speaker()
     
     var episodes: [[RecordingSnapshot]] = []
     var recordingData: [RecordingSnapshot] = []
     @Published var recording = false
     
     init() {
+        self.model = try! SignRecognition(configuration: MLModelConfiguration())
         self.startMotionUpdates()
+    }
+    
+    func classify(recording: [RecordingSnapshot]) {
+        let timesteps = recording.count
+        let accX = recording.map { ($0.accX) }
+        let accY = recording.map { ($0.accY) }
+        let accZ = recording.map { ($0.accZ) }
+        let gyroX = recording.map { ($0.gyroX) }
+        let gyroY = recording.map { ($0.gyroY) }
+        let gyroZ = recording.map { ($0.gyroZ) }
+        var recurrentState = try! MLMultiArray(shape: [400], dataType: .float64)
+        for i in 0..<400 {
+            recurrentState[i] = 0
+        }
+
+        let accXML = try! MLMultiArray(shape: [25], dataType: .float64)
+        let accYML = try! MLMultiArray(shape: [25], dataType: .float64)
+        let accZML = try! MLMultiArray(shape: [25], dataType: .float64)
+        let gyroXML = try! MLMultiArray(shape: [25], dataType: .float64)
+        let gyroYML = try! MLMultiArray(shape: [25], dataType: .float64)
+        let gyroZML = try! MLMultiArray(shape: [25], dataType: .float64)
+        var labelProbabilities: [String: Double] = [:]
+        let chunks = timesteps / 25
+        for i in 0..<chunks {
+            let start = i * 25
+            for idx in 0..<25 {
+                accXML[idx] =  NSNumber(value: accX[start + idx])
+                accYML[idx] =  NSNumber(value: accY[start + idx])
+                accZML[idx] =  NSNumber(value: accZ[start + idx])
+                gyroXML[idx] = NSNumber(value: gyroX[start + idx])
+                gyroYML[idx] = NSNumber(value: gyroY[start + idx])
+                gyroZML[idx] = NSNumber(value: gyroZ[start + idx])
+            }
+            let result = try! self.model.prediction(accX: accXML, accY: accYML, accZ: accZML, gyroX: gyroXML, gyroY: gyroYML, gyroZ: gyroZML, stateIn: recurrentState)
+            recurrentState = result.stateOut
+            labelProbabilities = result.labelProbability
+        }
+        print(labelProbabilities)
+        let guess = labelProbabilities.max {
+            $0.value < $1.value
+        }!.key
+        speaker.speak(guess)
     }
 
     private func startMotionUpdates() {
@@ -72,6 +118,7 @@ class MotionManager: ObservableObject {
             let x = self.recordingData
             self.episodes.append(x)
             self.recordingData = []
+            self.classify(recording: x)
         }
     }
     

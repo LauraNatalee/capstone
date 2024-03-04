@@ -40,12 +40,13 @@ class Comms: NSObject, ObservableObject, WCSessionDelegate {
     }
     
     func session(_ session: WCSession, didReceiveMessage message: [String : Any]) {
-        guard let currentWatchStatus = message["currentWatchStatus"] as? Bool else {
-            fatalError("Invalid message: \(message)")
-        }
-        DispatchQueue.main.sync {
-            self.recording = currentWatchStatus
-            print("Updated iOS State to Watch state")
+        if let currentWatchStatus = message["currentWatchStatus"] as? Bool {
+            DispatchQueue.main.sync {
+                self.recording = currentWatchStatus
+                print("Updated iOS State to Watch state")
+            }
+        } else {
+            fatalError("Invalid Message: \(message)")
         }
     }
     

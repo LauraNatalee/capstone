@@ -17,6 +17,8 @@
 		FC67DBFA2B0AE905003347C4 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FC67DBF92B0AE905003347C4 /* Preview Assets.xcassets */; };
 		FC67DBFD2B0AE905003347C4 /* SigningInStyleWatch Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = FC67DBF02B0AE904003347C4 /* SigningInStyleWatch Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		FCB7689A2B5C63DF00F39FCB /* Audio.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCB768992B5C63DF00F39FCB /* Audio.swift */; };
+		FCEBAEE12B95964100966785 /* SignRecognition.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = FCEBAEE02B95964100966785 /* SignRecognition.mlmodel */; };
+		FCEBAEE22B95964100966785 /* SignRecognition.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = FCEBAEE02B95964100966785 /* SignRecognition.mlmodel */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +57,8 @@
 		FC67DBF62B0AE905003347C4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FC67DBF92B0AE905003347C4 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		FCB768992B5C63DF00F39FCB /* Audio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Audio.swift; sourceTree = "<group>"; };
+		FCEBAECF2B95882E00966785 /* GestureRecognition.mlproj */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = GestureRecognition.mlproj; sourceTree = "<group>"; };
+		FCEBAEE02B95964100966785 /* SignRecognition.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = SignRecognition.mlmodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,6 +111,7 @@
 		FC67DBE42B0AE870003347C4 /* Preview Content */ = {
 			isa = PBXGroup;
 			children = (
+				FCEBAECF2B95882E00966785 /* GestureRecognition.mlproj */,
 				FC67DBE52B0AE870003347C4 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
@@ -115,6 +120,7 @@
 		FC67DBF12B0AE904003347C4 /* SigningInStyleWatch Watch App */ = {
 			isa = PBXGroup;
 			children = (
+				FCEBAEE02B95964100966785 /* SignRecognition.mlmodel */,
 				FC67DBF22B0AE904003347C4 /* SigningInStyleWatchApp.swift */,
 				FC67DBF42B0AE904003347C4 /* ContentView.swift */,
 				FCB768992B5C63DF00F39FCB /* Audio.swift */,
@@ -236,6 +242,7 @@
 			files = (
 				FC67DBE12B0AE86F003347C4 /* ContentView.swift in Sources */,
 				FC67DBDF2B0AE86F003347C4 /* SigningInStyleApp.swift in Sources */,
+				FCEBAEE12B95964100966785 /* SignRecognition.mlmodel in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -244,6 +251,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FCB7689A2B5C63DF00F39FCB /* Audio.swift in Sources */,
+				FCEBAEE22B95964100966785 /* SignRecognition.mlmodel in Sources */,
 				FC67DBF52B0AE904003347C4 /* ContentView.swift in Sources */,
 				FC67DBF32B0AE904003347C4 /* SigningInStyleWatchApp.swift in Sources */,
 			);
