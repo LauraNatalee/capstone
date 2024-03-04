@@ -1,90 +1,171 @@
-import SwiftUI
+import Combine
 import CoreMotion
+import SwiftUI
+import WatchConnectivity
+
+struct RecordingSnapshot {
+    let accX: Double
+    let accY: Double
+    let accZ: Double
+    let gyroX: Double
+    let gyroY: Double
+    let gyroZ: Double
+}
+
+extension RecordingSnapshot: CustomStringConvertible {
+    var description: String {
+        "\(accX),\(accY),\(accZ),\(gyroX),\(gyroY),\(gyroZ)"
+    }
+}
 
 class MotionManager: ObservableObject {
     private var motionManager = CMMotionManager()
-    private var state = ""
-    private let speaker = Speaker()
     
-    @Published var data = "" //
+    var episodes: [[RecordingSnapshot]] = []
+    var recordingData: [RecordingSnapshot] = []
+    @Published var recording = false
     
-    func demo_process(accelerometerData: CMAcceleration) {
-        let accX = accelerometerData.x
-        let speedX = 0.75
-        let speedY = 0.75
-        let speedZ = 1.75
-        let accY = accelerometerData.y
-        let accZ = accelerometerData.z
-        let prevState = self.state
-        if (abs(accX) > speedX && abs(accY) > speedY) {
-            print("sorry")
-            self.state = "sorry"
-        } else if (abs(accY) > speedY && abs(accZ) > speedZ) {
-            print("thank you")
-            self.state = "thank you"
-        }
-
-        if prevState != self.state {
-            self.speaker.stopSpeaking()
-            self.speaker.speak(self.state)
-        }
-            
-        DispatchQueue.main.async {
-            if (abs(accX) > speedX && abs(accY) > speedY) {
-                self.data = "sorry"
-            } else if (abs(accY) > speedY && abs(accZ) > speedZ) {
-                self.data = "thank you"
-            }
-        }
-    }
-    
-    func process(accelerometerData: CMAcceleration) {
-        print("Acc: \(accelerometerData)")
-    }
-    
-    func process(rotationRate: CMRotationRate) {
-        print("Gyro: \(rotationRate)")
+    init() {
+        self.startMotionUpdates()
     }
 
-    func startMotionUpdates() {
+    private func startMotionUpdates() {
         guard motionManager.isDeviceMotionAvailable else {
             fatalError("No device motion available")
         }
         
-        motionManager.deviceMotionUpdateInterval = 0.1 // Adjust as needed
+        motionManager.deviceMotionUpdateInterval = 1 / 100 // 100Hz
         
         motionManager.startDeviceMotionUpdates(to: .main) { (motion, error) in
             guard let motion = motion else {
                 fatalError("No motion data")
             }
-            
-            //self.demo_process(accelerometerData: motion.userAcceleration)
-            self.process(accelerometerData: motion.userAcceleration)
-            self.process(rotationRate: motion.rotationRate)
+            guard self.recording else {
+                return
+            }
+            let snapshot = RecordingSnapshot(
+                accX: motion.userAcceleration.x,
+                accY: motion.userAcceleration.y,
+                accZ: motion.userAcceleration.z,
+                gyroX: motion.rotationRate.x,
+                gyroY: motion.rotationRate.y,
+                gyroZ: motion.rotationRate.z
+            )
+            self.recordingData.append(snapshot)
         }
     }
 
-    func stopMotionUpdates() {
+    private func stopMotionUpdates() {
         motionManager.stopDeviceMotionUpdates()
+    }
+    
+    func startRecording() {
+        DispatchQueue.main.sync {
+            self.recordingData = []
+            self.recording = true
+        }
+    }
+    
+    func stopRecording() {
+        DispatchQueue.main.sync {
+            self.recording = false
+            let x = self.recordingData
+            self.episodes.append(x)
+            self.recordingData = []
+        }
+    }
+    
+    func export() {
+        DispatchQueue.main.sync {
+            let x = self.episodes.map { episode in
+                episode.map { $0.description }.joined(separator: "|||")
+            }.joined(separator: "~~~")
+            print(x)
+            self.episodes = []
+        }
+    }
+}
+
+enum MotionRecordingStatus {
+    case start, stop
+}
+
+class Comms: NSObject, ObservableObject, WCSessionDelegate {
+    let recordingStatusChannel = PassthroughSubject<MotionRecordingStatus, Never>()
+    
+    let session: WCSession
+    let motionManager: MotionManager
+    @Published var hasPhoneConnection = false
+    
+    init(motionManager: MotionManager) {
+        self.session = WCSession.default
+        self.motionManager = motionManager
+        super.init()
+
+        self.session.delegate = self
+        self.session.activate()
+    }
+    
+    func session(
+        _ session: WCSession,
+        activationDidCompleteWith activationState: WCSessionActivationState,
+        error: Error?
+    ) {
+        if let error = error {
+            fatalError("\(error)")
+        }
+        guard self.session == session else {
+            fatalError("Inconsistent session state")
+        }
+        guard activationState == WCSessionActivationState.activated else {
+            fatalError("\(activationState)")
+        }
+        self.hasPhoneConnection = self.session.isReachable
+    }
+    
+    func session(_ session: WCSession, didReceiveMessage message: [String : Any]) {
+        guard let status = message["status"] as? String else {
+            fatalError("Invalid message: \(message)")
+        }
+        switch status {
+        case "start":
+            self.motionManager.startRecording()
+        case "stop":
+            self.motionManager.stopRecording()
+        case "export":
+            self.motionManager.export()
+        default:
+            fatalError("Invalid status: \(status)")
+        }
+    }
+    
+    func sessionReachabilityDidChange(_ session: WCSession) {
+        if !self.hasPhoneConnection && session.isReachable {
+            session.sendMessage(["currentWatchStatus": self.motionManager.recording], replyHandler: nil)
+        }
+        self.hasPhoneConnection = session.isReachable
     }
 }
 
 
 struct ContentView: View {
-    @StateObject private var motionManager = MotionManager()
+    @ObservedObject private var motionManager: MotionManager
+    @ObservedObject private var comms: Comms
+    
+    init() {
+        let motionManager = MotionManager()
+        self.motionManager = motionManager
+        self.comms = Comms(motionManager: motionManager)
+    }
 
     var body: some View {
-        VStack {
-            Text("ASL Detection")
-            
-            Text(motionManager.data) //Motion Data Stream
-            
-            Button("Start") {
-                motionManager.startMotionUpdates()
-            }
-            Button("Stop") {
-                motionManager.stopMotionUpdates()
+        ZStack {
+            if motionManager.recording {
+                Color.green
+            } else {
+                Color.red
             }
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 }
