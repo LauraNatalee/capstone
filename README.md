@@ -15,4 +15,5 @@ The folders and files for this project are as follows:
 - refs - Reference material used for the project, including papers
 - src - Source code
 - test - Test cases
+- nRF52840Sense - Source code for nRF52840 Sense chip
 - etc.
