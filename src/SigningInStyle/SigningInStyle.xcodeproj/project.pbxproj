@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		FC34220C2B966F0D00830B35 /* SignRecognition.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = FC34220B2B966F0D00830B35 /* SignRecognition.mlmodel */; };
-		FC34220D2B966F0D00830B35 /* SignRecognition.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = FC34220B2B966F0D00830B35 /* SignRecognition.mlmodel */; };
+		FC3422122B9698D000830B35 /* SignRecognition.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = FC3422112B9698D000830B35 /* SignRecognition.mlmodel */; };
+		FC3422132B9698D000830B35 /* SignRecognition.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = FC3422112B9698D000830B35 /* SignRecognition.mlmodel */; };
 		FC67DBDF2B0AE86F003347C4 /* SigningInStyleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC67DBDE2B0AE86F003347C4 /* SigningInStyleApp.swift */; };
 		FC67DBE12B0AE86F003347C4 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC67DBE02B0AE86F003347C4 /* ContentView.swift */; };
 		FC67DBE32B0AE870003347C4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FC67DBE22B0AE870003347C4 /* Assets.xcassets */; };
@@ -46,7 +46,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		FC34220B2B966F0D00830B35 /* SignRecognition.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = SignRecognition.mlmodel; sourceTree = "<group>"; };
+		FC3422112B9698D000830B35 /* SignRecognition.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = SignRecognition.mlmodel; sourceTree = "<group>"; };
 		FC67DBDB2B0AE86F003347C4 /* SigningInStyle.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SigningInStyle.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FC67DBDE2B0AE86F003347C4 /* SigningInStyleApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SigningInStyleApp.swift; sourceTree = "<group>"; };
 		FC67DBE02B0AE86F003347C4 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -120,7 +120,7 @@
 		FC67DBF12B0AE904003347C4 /* SigningInStyleWatch Watch App */ = {
 			isa = PBXGroup;
 			children = (
-				FC34220B2B966F0D00830B35 /* SignRecognition.mlmodel */,
+				FC3422112B9698D000830B35 /* SignRecognition.mlmodel */,
 				FC67DBF22B0AE904003347C4 /* SigningInStyleWatchApp.swift */,
 				FC67DBF42B0AE904003347C4 /* ContentView.swift */,
 				FCB768992B5C63DF00F39FCB /* Audio.swift */,
@@ -242,7 +242,7 @@
 			files = (
 				FC67DBE12B0AE86F003347C4 /* ContentView.swift in Sources */,
 				FC67DBDF2B0AE86F003347C4 /* SigningInStyleApp.swift in Sources */,
-				FC34220C2B966F0D00830B35 /* SignRecognition.mlmodel in Sources */,
+				FC3422122B9698D000830B35 /* SignRecognition.mlmodel in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -251,7 +251,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FCB7689A2B5C63DF00F39FCB /* Audio.swift in Sources */,
-				FC34220D2B966F0D00830B35 /* SignRecognition.mlmodel in Sources */,
+				FC3422132B9698D000830B35 /* SignRecognition.mlmodel in Sources */,
 				FC67DBF52B0AE904003347C4 /* ContentView.swift in Sources */,
 				FC67DBF32B0AE904003347C4 /* SigningInStyleWatchApp.swift in Sources */,
 			);
